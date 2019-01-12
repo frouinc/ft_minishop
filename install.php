@@ -86,7 +86,7 @@ function createAdmin($conn) {
 	}
 }
 
-$servername = "localhost:8889";
+$servername = "localhost:3306";
 $username = "root";
 $password = "root";
 
