@@ -1,3 +1,43 @@
+<?php
+
+$servername = "localhost:8889";
+$username = "root";
+$password = "root";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, 'ft_minishop');
+// Check connection
+if (!$conn) {
+	die("Connection failed: " . mysqli_connect_error());
+}
+
+
+// Get all articles
+$sql = "SELECT * FROM article";
+$result = mysqli_query($conn, $sql);
+
+$articles = [];
+if (mysqli_num_rows($result) > 0) {
+	while ($row = mysqli_fetch_assoc($result)) {
+		$articles[] = $row;
+	}
+}
+
+// Get all categories
+$sql = "SELECT * FROM category";
+$result = mysqli_query($conn, $sql);
+
+$categories = [];
+if (mysqli_num_rows($result) > 0) {
+	while ($row = mysqli_fetch_assoc($result)) {
+		$categories[] = $row;
+	}
+}
+
+mysqli_close($conn);
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,11 +50,9 @@
 		<div class="middle">
 			<div class="side">
 				<ul class="category-list">
-					<li><a href="#">Category 1</a></li>
-					<li><a href="#">Category 2</a></li>
-					<li><a href="#">Category 3</a></li>
-					<li><a href="#">Category 4</a></li>
-					<li><a href="#">Category 5</a></li>
+					<?php foreach($categories as $category) { ?>
+						<!-- <li><a href="index.php?category=<?= $category['id']?>">Category 1</a></li> -->
+					<?php } ?>
 				</ul>
 			</div>
 			<div class="main article-main">

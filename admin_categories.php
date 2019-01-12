@@ -37,6 +37,16 @@ mysqli_close($conn);
 		<div class="middle">
 			<?php include("admin_sidebar.php") ?>
 			<div class="main admin-list">
+				<h1>Categories</h1>
+				<form method="post" action="controller/category_add.php">
+					<div class="form-group">
+						<label>Name</label>
+						<input type="text" name="name" />
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Create" />
+					</div>
+				</form>
 				<table class="admin-sales-table">
 					<tr>
 						<th>Action</th>
@@ -46,11 +56,16 @@ mysqli_close($conn);
 					<?php foreach ($categories as $category) { ?>
 						<tr>
 							<td>
-								<img class="icon" src="https://cdn3.iconfinder.com/data/icons/simplius-pack/512/pencil_and_paper-512.png" />
-								<img class="icon" src="https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png" />
+								<a href="controller/category_remove.php?id=<?= $category['id'] ?>"><img class="icon" src="https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png" /></a>
 							</td>
 							<td><?= $category['id'] ?></td>
-							<td><?= $category['name'] ?></td>
+							<td>
+								<form method="post" action="controller/category_edit.php">
+									<input type="text" name="name" value="<?= $category['name'] ?>" />
+									<input type="hidden" name="id" value="<?= $category['id'] ?>" />
+									<input type="image" src="https://cdn3.iconfinder.com/data/icons/simplius-pack/512/pencil_and_paper-512.png" class="icon" />
+								</form>
+							</td>
 						</tr>
 					<?php } ?>
 				</table>
