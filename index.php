@@ -17,15 +17,15 @@
 					<li><a href="#">Category 5</a></li>
 				</ul>
 			</div>
-			<div class="main">
+			<div class="main home-articlelist">
 				<?php for ($i = 0; $i < 8; $i++) { ?>
-					<div class="article">
-						<a href="google.fr" target="_blank" class="article-link">
+					<div class="home-article">
+						<a href="article.php?id=<?= $i ?>" target="_blank" class="home-article-link">
 							<div class="article-picture">
 								<img src="https://picsum.photos/150/150" />
 							</div>
 							<div class="article-body">
-								<h3>TITRE</h3>
+								<h3>ARTICLE <?= $i ?></h3>
 								<p>
 									5000.00€
 								</p>

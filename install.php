@@ -48,8 +48,7 @@ function createArticle($conn) {
 function createCategory($conn) {
 	$sql = "CREATE TABLE IF NOT EXISTS category (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
-	name VARCHAR(128) NOT NULL,
-	description VARCHAR(512))";
+	name VARCHAR(128) NOT NULL)";
 
 	if (mysqli_query($conn, $sql)) {
 		echo "Table category created successfully\n";
