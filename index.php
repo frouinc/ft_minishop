@@ -6,12 +6,7 @@
 </head>
 <body>
 	<div class="vwrapper">
-		<div class="header">
-			<a href="#default" class="logo">FT_MINISHOP</a>
-			<div class="header-right">
-				<a class="header-link" href="#">Login</a>
-			</div>
-		</div>
+		<?php include("header.php") ?>
 		<div class="middle">
 			<div class="side">
 				<ul class="category-list">
@@ -40,11 +35,7 @@
 				<?php } ?>
 			</div>
 		</div>
-		<div class="footer">
-			<div class="header-right">
-				<a class="footer-link" href="#">staminh</a> &amp; <a class="footer-link" href="https://www.cyrillefrouin.fr" target="_blank">cfrouin</a>
-			</div>
-		</div>
+		<?php include("footer.php") ?>
 	</div>
 </body>
 </html>
