@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if($_SESSION[userid] !== null && $_SESSION[userid] !== "" && $_SESSION[username] !== null && $_SESSION[username] !== "") 
+if($_SESSION['userid'] !== null && $_SESSION['userid'] !== "" && $_SESSION['username'] !== null && $_SESSION['username'] !== "") 
 {
 	header('Location: index.php');
 }
