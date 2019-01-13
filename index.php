@@ -15,32 +15,46 @@ if (mysqli_num_rows($result) > 0) {
 	}
 }
 
+$articles = [];
 if (isset($_GET['category']) && $_GET['category'] !== "") {
-	echo "ASD";
 	$sql = "SELECT * FROM link WHERE category_id = ?";
 	$result = mysqli_query($conn, $sql);
 
 	$stmt = mysqli_stmt_init($conn);
 	if (mysqli_stmt_prepare($stmt, $sql)) {
-		mysqli_stmt_bind_param($stmt, "i", $_GET['id']);
+		mysqli_stmt_bind_param($stmt, "i", $_GET['category']);
 		mysqli_stmt_execute($stmt);
 
 		$result = mysqli_stmt_get_result($stmt);
-		$article = mysqli_fetch_array($result);
+		$links = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 		mysqli_stmt_close($stmt);
 	}
 
-}
+	$intArray = [];
+	foreach ($links as $link) {
+		$intArray[] = $link['article_id'];
+	}
 
-// Get all articles
-$sql = "SELECT * FROM article";
-$result = mysqli_query($conn, $sql);
+	$articleList = implode(",", $intArray);
 
-$articles = [];
-if (mysqli_num_rows($result) > 0) {
-	while ($row = mysqli_fetch_assoc($result)) {
-		$articles[] = $row;
+	$sql = "SELECT * FROM article WHERE id IN (" . $articleList . ")";
+	$result = mysqli_query($conn, $sql);
+
+	if (mysqli_num_rows($result) > 0) {
+		while ($row = mysqli_fetch_assoc($result)) {
+			$articles[] = $row;
+		}
+	}
+
+} else {
+	$sql = "SELECT * FROM article";
+	$result = mysqli_query($conn, $sql);
+
+	if (mysqli_num_rows($result) > 0) {
+		while ($row = mysqli_fetch_assoc($result)) {
+			$articles[] = $row;
+		}
 	}
 }
 

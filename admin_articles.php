@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require('initdb.php');
 
 // Get all articles
