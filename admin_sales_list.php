@@ -1,3 +1,21 @@
+<?php
+
+require('initdb.php');
+
+$sql = "SELECT * FROM history";
+$result = mysqli_query($conn, $sql);
+
+$history = [];
+if (mysqli_num_rows($result) > 0) {
+	while ($row = mysqli_fetch_assoc($result)) {
+		$history[] = $row;
+	}
+}
+
+mysqli_close($conn);
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,33 +30,19 @@
 			<div class="main admin-list">
 				<table class="admin-sales-table">
 					<tr>
-						<th>Action</th>
 						<th>Id</th>
 						<th>Buyer</th>
 						<th>Date</th>
 						<th>Total</th>
 					</tr>
-					<tr>
-						<td><img class="icon" src="https://cdn1.iconfinder.com/data/icons/trycons/32/search-512.png" /></td>
-						<td>0</td>
-						<td>Username</td>
-						<td>12/01/2019 24:21:21</td>
-						<td>15000.00 €</td>
-					</tr>
-					<tr>
-						<td><img class="icon" src="https://cdn1.iconfinder.com/data/icons/trycons/32/search-512.png" /></td>
-						<td>0</td>
-						<td>Username</td>
-						<td>12/01/2019 24:21:21</td>
-						<td>15000.00 €</td>
-					</tr>
-					<tr>
-						<td><img class="icon" src="https://cdn1.iconfinder.com/data/icons/trycons/32/search-512.png" /></td>
-						<td>0</td>
-						<td>Username</td>
-						<td>12/01/2019 24:21:21</td>
-						<td>15000.00 €</td>
-					</tr>
+					<?php foreach ($history as $sale) { ?>
+						<tr>
+							<td><?= $sale['id'] ?></td>
+							<td><?= $sale['user_id'] ?></td>
+							<td><?= $sale['payment_date'] ?></td>
+							<td><?= $sale['total'] ?> €</td>
+						</tr>
+					<?php } ?>
 				</table>
 			</div>
 		</div>

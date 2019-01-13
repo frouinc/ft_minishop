@@ -91,8 +91,9 @@ function createAdmin($conn) {
 function createHistory($conn) {
 	$sql = "CREATE TABLE IF NOT EXISTS history (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	username_id INT NOT NULL,
-	total DECIMAL(8, 2))";
+	user_id INT NOT NULL,
+	total DECIMAL(8, 2),
+	payment_date DATETIME DEFAULT GETDATE())";
 
 	if (mysqli_query($conn, $sql)) {
 		echo "Table history created successfully\n";

@@ -36,7 +36,7 @@ if (isset($_SESSION['basket'])) {
 		}
 	}
 
-	$sql = "INSERT INTO history (username_id, total) VALUES (?, ?)";
+	$sql = "INSERT INTO history (user_id, total) VALUES (?, ?)";
 
 	$stmt = mysqli_stmt_init($conn);
 	if (mysqli_stmt_prepare($stmt, $sql)) {
