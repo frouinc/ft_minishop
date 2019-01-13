@@ -2,6 +2,7 @@
 
 session_start();
 
+require('admin_check.php');
 require('initdb.php');
 
 $sql = "SELECT * FROM history";
