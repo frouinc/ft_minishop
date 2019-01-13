@@ -15,7 +15,7 @@ function createDatabase($conn) {
 function createUser($conn) {
 	$sql = "CREATE TABLE IF NOT EXISTS user (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
-	username VARCHAR(32) NOT NULL,
+	username VARCHAR(32) NOT NULL UNIQUE,
 	password VARCHAR(128) NOT NULL,
 	permission INT DEFAULT 0,
 	creation_date TIMESTAMP)";
@@ -48,7 +48,7 @@ function createArticle($conn) {
 function createCategory($conn) {
 	$sql = "CREATE TABLE IF NOT EXISTS category (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
-	name VARCHAR(128) NOT NULL)";
+	name VARCHAR(128) NOT NULL UNIQUE)";
 
 	if (mysqli_query($conn, $sql)) {
 		echo "Table category created successfully\n";
@@ -62,8 +62,8 @@ function createCategory($conn) {
 function createLink($conn) {
 	$sql = "CREATE TABLE IF NOT EXISTS link (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	article INT NOT NULL,
-	category INT NOT NULL)";
+	article_id INT NOT NULL,
+	category_id INT NOT NULL)";
 
 	if (mysqli_query($conn, $sql)) {
 		echo "Table link created successfully\n";
@@ -86,7 +86,37 @@ function createAdmin($conn) {
 	}
 }
 
-$servername = "localhost:3306";
+function createHistory($conn) {
+	$sql = "CREATE TABLE IF NOT EXISTS history (
+	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	username_id INT NOT NULL,
+	total DECIMAL(8, 2))";
+
+	if (mysqli_query($conn, $sql)) {
+		echo "Table history created successfully\n";
+		return (true);
+	} else {
+		echo "Error creating table history: " . mysqli_error($conn);
+		return (false);
+	}
+}
+
+function createHistoryLink($conn) {
+	$sql = "CREATE TABLE IF NOT EXISTS history_link (
+	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	history_id INT NOT NULL,
+	article_id INT NOT NULL)";
+
+	if (mysqli_query($conn, $sql)) {
+		echo "Table history_link created successfully\n";
+		return (true);
+	} else {
+		echo "Error creating table history_link: " . mysqli_error($conn);
+		return (false);
+	}
+}
+
+$servername = "localhost:8889";
 $username = "root";
 $password = "root";
 
@@ -109,8 +139,12 @@ if (createDatabase($conn)) {
 				if (createCategory($conn)) {
 					// Create link table
 					if (createLink($conn)) {
-						if (createAdmin($conn)) {
-							echo "The database has been initializated successfully\n";
+						if (createHistory($conn)) {
+							if (createHistoryLink($conn)) {
+								if (createAdmin($conn)) {
+									echo "The database has been initializated successfully\n";
+								}
+							}
 						}
 					}
 				}
