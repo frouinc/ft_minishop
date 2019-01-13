@@ -18,10 +18,15 @@
 
 		<?php
 		if($_SESSION['userid'] !== null && $_SESSION['userid'] !== "" && $_SESSION['username'] !== null && $_SESSION['username'] !== "") {
-			unset($_SESSION['userid']);
-			unset($_SESSION['username']);
 			?>
-			<a class="header-link" href="index.php">Déconnexion</a>
+			<a class="header-link" href="controller/logout.php">Déconnexion</a>
+		<?php } ?>
+		
+<!-- je suis connecte en admin, bouton admin-->		
+		<?php
+		if($_SESSION['userid'] !== null && $_SESSION['userid'] !== "" && $_SESSION['username'] !== null && $_SESSION['username'] !== "" && $_SESSION['permission'] == 1) {
+		?>
+			<a class="header-link" href="admin_sales_list.php">Admin</a>
 		<?php } ?>
 
 
