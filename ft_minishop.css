@@ -11,6 +11,14 @@ body {
 label{
 	padding: 2vh 2vw 2vh 2vw;
 }
+
+.error {
+	background-color:white;
+	padding: 2vh 2vw 2vh 2vw;
+	margin: 15px;
+	color:red;
+}
+
 .icon {
 	width: 32px;
 	height: 32px;
@@ -23,7 +31,7 @@ label{
 	padding: 2vh 2vw 2vh 2vw;
 }
 
-/* bandeau de navigation */
+/* bandeau-de-navigation */
 .header {
 	background-color: #f1f1f1;
 	border-radius: 20px;
@@ -69,7 +77,7 @@ label{
 	margin-right: 20px;
 }
 
-/*bandeau de gauche*/
+/*bandeau-de-gauche*/
 .side {
 	width: 20%;
 	margin-right: 20px;
@@ -87,7 +95,7 @@ label{
 	flex-grow: 1;
 }
 
-/*pied de page*/
+/*pied-de-page*/
 .footer-left {
 	float: right;
 	margin-left: 20px;

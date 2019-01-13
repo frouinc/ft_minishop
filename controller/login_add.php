@@ -9,8 +9,9 @@ if ($_POST['username'] !== null && $_POST['username'] !== ""
 {
 
 	$sql = "INSERT INTO user (username, password, permission) VALUES (?, ?, ?)";
-
-	$password = hash("whirpool",$_POST['password']);
+	
+	$password = hash("whirlpool",$_POST['password']);
+	
 	$stmt = mysqli_stmt_init($conn);
 	if (mysqli_stmt_prepare($stmt, $sql)) 
 	{
@@ -18,7 +19,12 @@ if ($_POST['username'] !== null && $_POST['username'] !== ""
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}
-	mysqli_close($conn);
+	mysqli_close($conn);	
+}
+else
+{
+	header('Location: ../login.php?error=creation');
+	exit(0);
 }
 
 header('Location: ../login.php');
