@@ -48,9 +48,8 @@ if (mysqli_num_rows($result) > 0) {
 			<div class="main home-articlelist">
 				<?php foreach ($articles as $article) { ?>
 					<div class="home-article">
-						<a href="article.php?id=<?= $article['id'] ?>" class="home-article-link">
-							<div class="article-picture">
-								<img src="<?= $article['image'] ?>" />
+						<div class="home-article-container">
+							<div class="article-image-container" style="background: url('<?= $article['image'] ?>'); background-size: contain;background-repeat: no-repeat;background-position: center;">
 							</div>
 							<div class="article-body">
 								<h3><?= $article['name'] ?></h3>
@@ -58,7 +57,7 @@ if (mysqli_num_rows($result) > 0) {
 									<?= $article['price'] ?> €
 								</p>
 							</div>
-						</a>
+						</div>
 					</div>
 				<?php } ?>
 			</div>
