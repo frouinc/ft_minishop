@@ -1,34 +1,10 @@
-<?php
-
-include("initdb.php")
-
-// Get all articles
-$sql = "SELECT * FROM user";
-$result = mysqli_query($conn, $sql);
-
-$user = [];
-if (mysqli_num_rows($result) > 0) {
-	while ($row = mysqli_fetch_assoc($result)) {
-		$articles[] = $row;
-	}
+<?php 
+session_start();
+if($_SESSION[userid] !== null && $_SESSION[userid] !== "" && $_SESSION[username] !== null && $_SESSION[username] !== "") 
+{
+	header('Location: index.php');
 }
-
-// select du user
-$sql = "SELECT * FROM user WHERE";
-$result = mysqli_query($conn, $sql);
-
-
-if (mysqli_num_rows($result) > 0) {
-	while ($row = mysqli_fetch_assoc($result)) {
-		$categories[] = $row;
-	}
-}
-
-mysqli_close($conn);
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -44,7 +20,7 @@ mysqli_close($conn);
 
 				<div class="login-container half-column split-right">
 					<h2>SE CONNECTER</h2>
-					<form method="post" action="login_connect.php">
+					<form method="post" action="controller/login_connect.php">
 						<div class="form-group">
 							<label>Username</label>
 							<input type="text" name="username" />
@@ -55,6 +31,24 @@ mysqli_close($conn);
 						</div>
 						<div class="form-group">
 							<input type="submit" value="Connection" />
+						</div>
+						<div>
+							<?php
+							if ($_GET['error'] == "connection")
+								{
+							?>
+									<p class="error">veuillez saisir un username et un password 
+									</br>pour vous connecter</p>
+							<?php }
+							?>
+							<?php
+							if ($_GET['error'] == "erreur")
+								{
+							?>
+									<p class="error">nous ne retrouvons pas vos username/password
+									</br>Veuillez les ressaisir ou créer un compte</p>
+							<?php } 
+							?>
 						</div>
 					</form>
 				</div>
@@ -72,6 +66,16 @@ mysqli_close($conn);
 						</div>
 						<div class="form-group">
 							<input type="submit" value="Connection" />
+						</div>
+						<div>
+							<?php
+							if ($_GET['error'] == "creation")
+								{
+							?>
+									<p class="error">veuillez saisir un username et un password </br>
+									pour pouvoir créer un compte</p>
+							<?php } 
+							?>
 						</div>
 					</form>
 				</div>

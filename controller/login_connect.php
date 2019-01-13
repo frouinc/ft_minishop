@@ -1,66 +1,48 @@
 <?php
+// le header doit etre en premier, 
+//des qu'on fait un echo pour le debugg, il y a une erreur
+//pour afficher les erreur
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+//fin pour afficher les erreur
 
-include("initdb.php")
+require('../initdb.php');
 
 if ($_POST['username'] !== null && $_POST['username'] !== ""
 	&& $_POST['password'] !== null && ($_POST['password'] !== "")) 
 
 {
+	$password = hash("whirlpool",$_POST['password']);
 
-	$password = hash("whirpool",$_POST['password']);
-	$sql = "SELECT * FROM user WHERE username = $_POST['password'";
+	$sql = "SELECT * FROM user WHERE username = '" . $_POST['username'] . "' AND password = '" . $password . "'";
 	$result = mysqli_query($conn, $sql);
-}
+	if (mysqli_num_rows($result) == 0)
+	{
+		header('Location: ../login.php?error=erreur');
+	    exit(0);
+	}
 
-
-$result = mysqli_query($conn, $sql);
-
-$user = [];
-if (mysqli_num_rows($result) > 0) {
-	while ($row = mysqli_fetch_assoc($result)) {
-		$articles[] = $row;
+	if (mysqli_num_rows($result) == 1)
+	{	
+		$row_user = mysqli_fetch_assoc($result);
+		
+		session_start();
+		
+		$_SESSION['userid'] = $row_user['id'];
+		$_SESSION['username'] = $row_user['username'];
+		
+		header('Location: ../index.php');
+		exit(0);
 	}
 }
-
-// select du user
-$sql = "SELECT * FROM user WHERE ";
-$result = mysqli_query($conn, $sql);
-
-
-if (mysqli_num_rows($result) > 0) {
-	while ($row = mysqli_fetch_assoc($result)) {
-		$categories[] = $row;
-	}
+else
+{
+	header('Location: ../login.php?error=connection');
+	exit(0);
 }
 
 mysqli_close($conn);
 
-?>
-
-
-
-<?php
-
-require('../initdb.php');
-
-$perm = 1;
-
-
-if ($_POST['username'] !== null && $_POST['username'] !== ""
-	&& $_POST['password'] !== null && ($_POST['password'] !== "")) 
-{
-	$sql = "INSERT INTO user (username, password, permission) VALUES (?, ?, ?)";
-
-	$stmt = mysqli_stmt_init($conn);
-	if (mysqli_stmt_prepare($stmt, $sql)) 
-	{
-		mysqli_stmt_bind_param($stmt, "ssi", $_POST['username'], hash("whirpool",$_POST['password']), $perm);
-		mysqli_stmt_execute($stmt);
-		mysqli_stmt_close($stmt);
-	}
-	mysqli_close($conn);
-}
-
 header('Location: ../login.php');
-
 ?>
