@@ -19,7 +19,7 @@ if ($_POST['name'] !== null && $_POST['name'] !== ""
 	$id = mysqli_insert_id($conn);
 
 	foreach ($_POST['categories'] as $category) {
-		$sql = "INSERT INTO link (article, category) VALUES (?, ?)";
+		$sql = "INSERT INTO link (article_id, category_id) VALUES (?, ?)";
 
 		$stmt = mysqli_stmt_init($conn);
 		if (mysqli_stmt_prepare($stmt, $sql)) {
