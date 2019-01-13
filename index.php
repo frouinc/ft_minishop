@@ -59,7 +59,7 @@ if (mysqli_num_rows($result) > 0) {
 								</p>
 							</div>
 						</a>
-					</div>
+					</div> <!--home-article-->
 				<?php } ?>
 			</div>
 		</div>

@@ -76,6 +76,7 @@ label{
 	float: right;
 	margin-right: 20px;
 }
+/* fin-bandeau-de-navigation */
 
 /*bandeau-de-gauche*/
 .side {
@@ -127,7 +128,7 @@ label{
 	color: white;
 }
 
-
+/* home-page*/
 
 ul {
 	list-style-type: none;
@@ -179,6 +180,9 @@ li a:hover:not(.active) {
 	align-items: center;
 	text-align: center;
 	background: lightgrey;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
 }
 
 .home-article-link {
@@ -186,10 +190,18 @@ li a:hover:not(.active) {
 	text-decoration: none;
 }
 
+.article-picture{
+	
+}
+
+/* page-article*/
 .article-main {
 	display: flex;
 	padding-bottom: 20px;
 }
+
+
+
 
 .article-image-container {
 	flex-basis: 25%;
