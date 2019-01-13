@@ -31,6 +31,7 @@ if ($_POST['username'] !== null && $_POST['username'] !== ""
 		
 		$_SESSION['userid'] = $row_user['id'];
 		$_SESSION['username'] = $row_user['username'];
+		$_SESSION['permission'] = $row_user['permission'];
 		
 		header('Location: ../index.php');
 		exit(0);
