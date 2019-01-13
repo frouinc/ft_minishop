@@ -119,7 +119,12 @@ function createHistoryLink($conn) {
 	}
 }
 
-$servername = "localhost:3306";
+function importDatabase($conn) {
+	$queries = file_get_contents("import.sql");
+	return (mysqli_multi_query($conn, $queries));
+}
+
+$servername = "localhost:8889";
 $username = "root";
 $password = "root";
 
@@ -145,8 +150,10 @@ if (createDatabase($conn)) {
 					if (createLink($conn)) {
 						if (createHistory($conn)) {
 							if (createHistoryLink($conn)) {
-								if (createAdmin($conn)) {
+								if (importDatabase($conn)) {
 									echo "The database has been initializated successfully\n";
+								} else {
+									echo "Error while importing the database\n";
 								}
 							}
 						}

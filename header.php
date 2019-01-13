@@ -9,23 +9,18 @@
 			?>
 		</a>
 
-		<?php
-		if($_SESSION['userid'] !== null && $_SESSION['userid'] !== "" && $_SESSION['username'] !== null && $_SESSION['username'] !== "") {?>
-			<a class="header-link" href="index.php">Bonjour
-	    <?php echo $_SESSION['username']; } else {?></a>
+		<?php if (isset($_SESSION['userid']) && $_SESSION['userid'] !== "" && isset($_SESSION['username']) && $_SESSION['username'] !== "") { ?>
+			<a class="header-link" href="index.php">Bonjour <?= $_SESSION['username'] ?></a>
+		<?php } else { ?>
 			<a class="header-link" href="login.php">Connexion</a>
 		<?php } ?>
 
-		<?php
-		if($_SESSION['userid'] !== null && $_SESSION['userid'] !== "" && $_SESSION['username'] !== null && $_SESSION['username'] !== "") {
-			?>
+		<?php if (isset($_SESSION['userid']) && $_SESSION['userid'] !== "" && isset($_SESSION['username']) && $_SESSION['username'] !== "") { ?>
 			<a class="header-link" href="controller/logout.php">Déconnexion</a>
 		<?php } ?>
-		
-<!-- je suis connecte en admin, bouton admin-->		
-		<?php
-		if($_SESSION['userid'] !== null && $_SESSION['userid'] !== "" && $_SESSION['username'] !== null && $_SESSION['username'] !== "" && $_SESSION['permission'] == 1) {
-		?>
+
+		<!-- je suis connecte en admin, bouton admin-->		
+		<?php if (isset($_SESSION['userid']) && $_SESSION['userid'] !== "" && isset($_SESSION['username']) && $_SESSION['username'] !== "" && isset($_SESSION['permission']) && $_SESSION['permission'] == 1) { ?>
 			<a class="header-link" href="admin_sales_list.php">Admin</a>
 		<?php } ?>
 
