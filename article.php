@@ -14,8 +14,14 @@ if (isset($_POST['quantity']) && is_numeric($_POST['quantity'])) {
 	$isAdding = true;
 
 	$quantity = intval($_POST['quantity']);
+	if (!isset($_SESSION['basket'])) {
+		$_SESSION['basket'] = [];
+	}
 	for ($i = 0; $i < $quantity; $i++) {
-		$_SESSION['basket'][] = intval($_GET['id']);
+		if (!isset($_SESSION['basket'][intval($_GET['id'])])) {
+			$_SESSION['basket'][intval($_GET['id'])] = 0;
+		}
+		$_SESSION['basket'][intval($_GET['id'])]++;
 	}
 }
 
@@ -51,17 +57,6 @@ if (!$article) {
 	header('Location: .');
 }
 
-// Get all categories
-$sql = "SELECT * FROM category";
-$result = mysqli_query($conn, $sql);
-
-$categories = [];
-if (mysqli_num_rows($result) > 0) {
-	while ($row = mysqli_fetch_assoc($result)) {
-		$categories[] = $row;
-	}
-}
-
 mysqli_close($conn);
 
 ?>
@@ -78,14 +73,12 @@ mysqli_close($conn);
 		<div class="middle">
 			<div class="main article-main">
 				<div class="article-image-container">
-					<img class="article-image" src="https://picsum.photos/500/400" />
+					<img class="article-image" src="<?= $article['image'] ?>" />
 				</div>
 				<div class="article-body-container">
-					<h2>Article name</h2>
+					<h2><?= $article['name'] ?></h2>
 					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut porttitor leo. Maecenas tincidunt mauris ligula, consequat blandit ligula rhoncus eget. Nunc quis bibendum massa. Morbi semper felis id ante pulvinar, non euismod ipsum porttitor. Nunc aliquet dictum mattis. Sed laoreet ultricies nisi, ut dignissim dui dapibus ut. Etiam eu justo iaculis, accumsan mauris malesuada, fringilla justo. Nullam sit amet purus pellentesque, congue dui a, luctus quam. Sed malesuada augue sapien, nec pretium tellus placerat quis. Curabitur condimentum ante sit amet placerat semper. Vivamus luctus fermentum tellus, ut scelerisque justo vulputate nec. Phasellus vel nisl in libero auctor egestas. Nulla facilisi. Aenean eget sapien ex. Nulla rhoncus purus magna, eget pulvinar neque vehicula eu. Nullam vitae felis a magna consequat vulputate in et mauris.
-
-						Quisque vel velit condimentum, rutrum mauris at, dictum odio. Donec at pellentesque metus. Sed et iaculis elit. In vel faucibus leo. Nam turpis massa, aliquam ac volutpat nec, volutpat et eros. Nam vitae pharetra magna. Morbi sed risus a quam euismod cursus. Morbi non rutrum tortor. Vivamus porta et sapien in fermentum. Morbi finibus velit id tortor euismod, quis gravida orci efficitur. Morbi eget volutpat velit. Phasellus eget ligula in risus accumsan venenatis sed ut risus. Suspendisse porta pulvinar enim sed posuere. Integer ultrices tempor enim, ut fermentum lacus rutrum a. In maximus ac sem id ultrices.
+						<?= $article['description'] ?>
 					</p>
 				</div>
 				<div class="article-price-container">

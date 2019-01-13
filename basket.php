@@ -1,3 +1,46 @@
+<?php
+
+session_start();
+
+require('initdb.php');
+
+// Basket change
+if (isset($_POST['id']) && is_numeric($_POST['id'])
+	&& isset($_POST['quantity']) && is_numeric($_POST['quantity'])
+	&& isset($_SESSION['basket'])
+	&& isset($_SESSION['basket'][$_POST['id']])) {
+	$_SESSION['basket'][$_POST['id']] = $_POST['quantity'];
+}
+
+// Check if article in basket is 0 or less
+if (isset($_SESSION['basket'])) {
+	foreach ($_SESSION['basket'] as $key => $basketArticle) {
+		if ($basketArticle <= 0) {
+			unset($_SESSION['basket'][$key]);
+		}
+	}
+}
+
+// Prepare basket for display
+$basket = [];
+$totalPrice = 0.00;
+if (isset($_SESSION['basket'])) {
+	$articleList = implode(",", array_keys($_SESSION['basket']));
+
+	$sql = "SELECT * FROM article WHERE id IN (" . $articleList . ")";
+	$result = mysqli_query($conn, $sql);
+
+	if (mysqli_num_rows($result) > 0) {
+		while ($row = mysqli_fetch_assoc($result)) {
+			$row['quantity'] = $_SESSION['basket'][$row['id']];
+			$basket[] = $row;
+			$totalPrice += $row['quantity'] * $row['price'];
+		}
+	}
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,34 +62,29 @@
 							<th>Quantity</th>
 							<th>Total</th>
 						</tr>
-						<tr>
-							<td><img class="icon" src="https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png" /></td>
-							<td>ARTICLE NAME LOREM IPSUM DOLOR SIT AMET</td>
-							<td>5000.00€</td>
-							<td><input type="number" value="1" /></td>
-							<td>5000.00€</td>
-						</tr>
-						<tr>
-							<td><img class="icon" src="https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png" /></td>
-							<td>ARTICLE NAME LOREM IPSUM DOLOR SIT AMET</td>
-							<td>5000.00€</td>
-							<td><input type="number" value="1" /></td>
-							<td>5000.00€</td>
-						</tr>
-						<tr>
-							<td><img class="icon" src="https://cdn3.iconfinder.com/data/icons/objects/512/Bin-512.png" /></td>
-							<td>ARTICLE NAME LOREM IPSUM DOLOR SIT AMET</td>
-							<td>5000.00€</td>
-							<td><input type="number" value="1" /></td>
-							<td>5000.00€</td>
-						</tr>
+						<?php foreach ($basket as $basketArticle) { ?>
+							<tr>
+								<td><img class="icon" src="<?= $basketArticle['image'] ?>" /></td>
+								<td><?= $basketArticle['name'] ?></td>
+								<td><?= $basketArticle['price'] ?> €</td>
+								<td>
+									<form method="post" action="basket.php">
+										<input type="hidden" name="id" value="<?= $basketArticle['id'] ?>" />
+										<input type="number" name="quantity" value="<?= $basketArticle['quantity'] ?>" />
+										<input type="image" class="icon" src="https://cdn3.iconfinder.com/data/icons/simplius-pack/512/pencil_and_paper-512.png" />
+									</form>
+								</td>
+								<td><?= $basketArticle['price'] * $basketArticle['quantity'] ?> €</td>
+							</tr>
+						<?php } ?>
 						<tfoot>
 							<tr>
 								<td colspan="4"></td>
-								<td>15000.00 €</td>
+								<td><?= $totalPrice ?> €</td>
 							</tr>
 						</tfoot>
 					</table>
+					<a href="controller/confirm_payment.php"><button>Payer</button></a>
 				</div>
 			</div>
 		</div>

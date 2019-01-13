@@ -64,6 +64,7 @@ function createLink($conn) {
 	$sql = "CREATE TABLE IF NOT EXISTS link (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	article_id INT NOT NULL,
+	quantity INT NOT NULL,
 	category_id INT NOT NULL)";
 
 	if (mysqli_query($conn, $sql)) {
