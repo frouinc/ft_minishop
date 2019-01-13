@@ -192,6 +192,42 @@ li a:hover:not(.active) {
 	flex-direction: column;
 }
 
+.article-main {
+	display: flex;
+	padding-bottom: 20px;
+}
+
+.article-image-container {
+	flex-basis: 25%;
+	flex-shrink: 0;
+}
+
+.article-image {
+	width: 100%;
+}
+
+.article-body-container {
+	padding: 10px;
+	margin-left: 20px;
+	flex-grow: 1;
+	overflow: auto;
+}
+
+.article-body-container h2 {
+	margin: 0;
+}
+
+.article-price-container {
+	flex-basis: 20%;
+	flex-shrink: 0;
+	margin-left: 10px;
+}
+
+.article-price {
+	font-size: 2vw;
+	margin-bottom: 10px;
+}
+
 .article-image-container {
 	flex-grow: 2;
 }
