@@ -93,7 +93,7 @@ function createHistory($conn) {
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	username VARCHAR(32) NOT NULL,
 	total DECIMAL(8, 2),
-	payment_date DATETIME DEFAULT GETDATE())";
+	payment_date DATETIME DEFAULT CURRENT_TIMESTAMP)";
 
 	if (mysqli_query($conn, $sql)) {
 		echo "Table history created successfully\n";
@@ -119,7 +119,7 @@ function createHistoryLink($conn) {
 	}
 }
 
-$servername = "localhost:3306";
+$servername = "localhost:8889";
 $username = "root";
 $password = "root";
 
