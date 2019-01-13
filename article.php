@@ -1,5 +1,24 @@
 <?php
 
+session_start();
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+if (!isset($_GET['id']) || $_GET['id'] === "" || !is_numeric($_GET['id'])) {
+	header('Location: .');
+}
+
+$isAdding = false;
+if (isset($_POST['quantity']) && is_numeric($_POST['quantity'])) {
+	$isAdding = true;
+
+	$quantity = intval($_POST['quantity']);
+	for ($i = 0; $i < $quantity; $i++) {
+		$_SESSION['basket'][] = intval($_GET['id']);
+	}
+}
+
 $servername = "localhost:8889";
 $username = "root";
 $password = "root";
@@ -12,15 +31,24 @@ if (!$conn) {
 }
 
 
-// Get all articles
-$sql = "SELECT * FROM article";
+// Get article
+$article = null;
+$sql = "SELECT * FROM article WHERE id = ?";
 $result = mysqli_query($conn, $sql);
 
-$articles = [];
-if (mysqli_num_rows($result) > 0) {
-	while ($row = mysqli_fetch_assoc($result)) {
-		$articles[] = $row;
-	}
+$stmt = mysqli_stmt_init($conn);
+if (mysqli_stmt_prepare($stmt, $sql)) {
+	mysqli_stmt_bind_param($stmt, "i", $_GET['id']);
+	mysqli_stmt_execute($stmt);
+
+	$result = mysqli_stmt_get_result($stmt);
+	$article = mysqli_fetch_array($result);
+
+	mysqli_stmt_close($stmt);
+}
+
+if (!$article) {
+	header('Location: .');
 }
 
 // Get all categories
@@ -48,13 +76,6 @@ mysqli_close($conn);
 	<div class="vwrapper">
 		<?php include("header.php") ?>
 		<div class="middle">
-			<div class="side">
-				<ul class="category-list">
-					<?php foreach($categories as $category) { ?>
-						<!-- <li><a href="index.php?category=<?= $category['id']?>">Category 1</a></li> -->
-					<?php } ?>
-				</ul>
-			</div>
 			<div class="main article-main">
 				<div class="article-image-container">
 					<img class="article-image" src="https://picsum.photos/500/400" />
@@ -68,9 +89,10 @@ mysqli_close($conn);
 					</p>
 				</div>
 				<div class="article-price-container">
-					<form class="article-form">
+					<form class="article-form" method="post" action="article.php?id=<?= $_GET['id'] ?>">
+						<input type="hidden" name="id" value="<?= $_GET['id'] ?>" />
 						<div class="article-price">
-							5000.00 €
+							<?= $article['price'] ?> €
 						</div>
 						<div class="form-group">
 							<label>Quantity : </label>

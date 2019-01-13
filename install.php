@@ -34,7 +34,8 @@ function createArticle($conn) {
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 	name VARCHAR(128) NOT NULL,
 	description VARCHAR(512),
-	price DECIMAL(8, 2))";
+	price DECIMAL(8, 2),
+	image VARCHAR(256))";
 
 	if (mysqli_query($conn, $sql)) {
 		echo "Table article created successfully\n";

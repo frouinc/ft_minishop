@@ -11,6 +11,9 @@ if ($_POST['name'] !== null && $_POST['name'] !== ""
 		mysqli_stmt_bind_param($stmt, "ssds", $_POST['name'], $_POST['description'], $_POST['price'], $_POST['image']);
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
+	} else {
+		echo mysqli_stmt_error($stmt);
+		echo mysqli_error();
 	}
 
 	$id = mysqli_insert_id($conn);

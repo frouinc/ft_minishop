@@ -26,7 +26,7 @@ session_start();
 			<div class="main home-articlelist">
 				<?php for ($i = 0; $i < 8; $i++) { ?>
 					<div class="home-article">
-						<a href="article.php?id=<?= $i ?>" target="_blank" class="home-article-link">
+						<a href="article.php?id=<?= $i ?>" class="home-article-link">
 							<div class="article-picture">
 								<img src="https://picsum.photos/150/150" />
 							</div>
