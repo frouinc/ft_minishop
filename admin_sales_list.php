@@ -28,6 +28,7 @@ mysqli_close($conn);
 		<div class="middle">
 			<?php include("admin_sidebar.php") ?>
 			<div class="main admin-list">
+				<h1>History</h1>
 				<table class="admin-sales-table">
 					<tr>
 						<th>Id</th>
@@ -38,7 +39,7 @@ mysqli_close($conn);
 					<?php foreach ($history as $sale) { ?>
 						<tr>
 							<td><?= $sale['id'] ?></td>
-							<td><?= $sale['user_id'] ?></td>
+							<td><?= $sale['username'] ?></td>
 							<td><?= $sale['payment_date'] ?></td>
 							<td><?= $sale['total'] ?> €</td>
 						</tr>

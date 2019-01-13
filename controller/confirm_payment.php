@@ -36,12 +36,12 @@ if (isset($_SESSION['basket'])) {
 		}
 	}
 
-	$sql = "INSERT INTO history (user_id, total) VALUES (?, ?)";
+	$sql = "INSERT INTO history (username, total) VALUES (?, ?)";
 
 	$stmt = mysqli_stmt_init($conn);
 	if (mysqli_stmt_prepare($stmt, $sql)) {
-		$userid = 42;
-		mysqli_stmt_bind_param($stmt, "id", $userid, $totalPrice);
+		$username = "USER";
+		mysqli_stmt_bind_param($stmt, "sd", $username, $totalPrice);
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}

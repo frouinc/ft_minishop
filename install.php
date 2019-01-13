@@ -91,7 +91,7 @@ function createAdmin($conn) {
 function createHistory($conn) {
 	$sql = "CREATE TABLE IF NOT EXISTS history (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	user_id INT NOT NULL,
+	username VARCHAR(32) NOT NULL,
 	total DECIMAL(8, 2),
 	payment_date DATETIME DEFAULT GETDATE())";
 
