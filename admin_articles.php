@@ -62,7 +62,8 @@ mysqli_close($conn);
 						<input name="image" value="" />
 					</div>
 					<div class="form-group">
-						<label>Categories</label>
+						<label>Categories : Maintenir la touche Cmd pour sélectionner plusieurs catégories</label>
+						<br>
 						<select name="categories[]" size="<?= count($categories) ?>" multiple>
 							<?php foreach($categories as $category) { ?>
 								<option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
