@@ -1,15 +1,6 @@
 <?php
 
-$servername = "localhost:3306";
-$username = "root";
-$password = "root";
-
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, 'ft_minishop');
-// Check connection
-if (!$conn) {
-	die("Connection failed: " . mysqli_connect_error());
-}
+require('initdb.php');
 
 $sql = "SELECT * FROM category";
 $result = mysqli_query($conn, $sql);

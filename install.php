@@ -34,7 +34,8 @@ function createArticle($conn) {
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 	name VARCHAR(128) NOT NULL,
 	description VARCHAR(512),
-	price DECIMAL(8, 2))";
+	price DECIMAL(8, 2),
+	image VARCHAR(256))";
 
 	if (mysqli_query($conn, $sql)) {
 		echo "Table article created successfully\n";
@@ -63,6 +64,7 @@ function createLink($conn) {
 	$sql = "CREATE TABLE IF NOT EXISTS link (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	article_id INT NOT NULL,
+	quantity INT NOT NULL,
 	category_id INT NOT NULL)";
 
 	if (mysqli_query($conn, $sql)) {
@@ -116,7 +118,16 @@ function createHistoryLink($conn) {
 	}
 }
 
-<?php include("initdb.php") ?>
+$servername = "localhost:3306";
+$username = "root";
+$password = "root";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password);
+
+// Check connection
+if (!$conn) {
+	die("Connection failed: " . mysqli_connect_error());
 }
 
 // Create database

@@ -2,6 +2,30 @@
 
 session_start();
 
+require('initdb.php');
+
+// Get all articles
+$sql = "SELECT * FROM article";
+$result = mysqli_query($conn, $sql);
+
+$articles = [];
+if (mysqli_num_rows($result) > 0) {
+	while ($row = mysqli_fetch_assoc($result)) {
+		$articles[] = $row;
+	}
+}
+
+// Get all categories
+$sql = "SELECT * FROM category";
+$result = mysqli_query($conn, $sql);
+
+$categories = [];
+if (mysqli_num_rows($result) > 0) {
+	while ($row = mysqli_fetch_assoc($result)) {
+		$categories[] = $row;
+	}
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -16,24 +40,22 @@ session_start();
 		<div class="middle">
 			<div class="side">
 				<ul class="category-list">
-					<li><a href="#">Category 1</a></li>
-					<li><a href="#">Category 2</a></li>
-					<li><a href="#">Category 3</a></li>
-					<li><a href="#">Category 4</a></li>
-					<li><a href="#">Category 5</a></li>
+					<?php foreach ($categories as $category) { ?>
+						<li><a href="?category=<?= $category['id'] ?>"><?= $category['name'] ?></a></li>
+					<?php } ?>
 				</ul>
 			</div>
 			<div class="main home-articlelist">
-				<?php for ($i = 0; $i < 8; $i++) { ?>
+				<?php foreach ($articles as $article) { ?>
 					<div class="home-article">
-						<a href="article.php?id=<?= $i ?>" target="_blank" class="home-article-link">
+						<a href="article.php?id=<?= $article['id'] ?>" class="home-article-link">
 							<div class="article-picture">
-								<img src="https://picsum.photos/150/150" />
+								<img src="<?= $article['image'] ?>" />
 							</div>
 							<div class="article-body">
-								<h3>ARTICLE <?= $i ?></h3>
+								<h3><?= $article['name'] ?></h3>
 								<p>
-									5000.00€
+									<?= $article['price'] ?> €
 								</p>
 							</div>
 						</a>
